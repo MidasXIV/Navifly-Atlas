@@ -1,0 +1,576 @@
+<!--
+Base    : #15191c
+Second  : #23262b
+Primary : #2f363c
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>NAVIFLY || Atlas</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.2/jquery.mobile.css" />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+
+    <!-- ListView -->
+    <!--
+    <link rel="stylesheet" href="css/editable-listview.css">
+
+    <script src="http://code.jquery.com/jquery-2.1.1.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.2/jquery.mobile.js"></script>
+    <script src="js/collapsible-patched.js"></script>
+    <script src="js/editable-listview.js"></script>
+    -->
+
+    <!-- Add icon library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    <!-- ScrollBar library -->
+    <link rel="stylesheet" href="css/jquery.mCustomScrollbar.css">
+
+
+
+    <link rel="stylesheet" href="css/bootstrap-datepicker.standalone.css">
+    <script src="js/bootstrap-datepicker.min.js"></script>
+    <!-- FIREBASE -->
+    <script src="https://www.gstatic.com/firebasejs/5.0.2/firebase.js"></script>
+    
+
+
+</head>
+
+<body>
+    <style>
+        body , .ui-page-theme-a{
+background-color: #15191c;
+color: #666;
+height: 100vh;
+}
+
+#Secondary {
+background-color: #23262b;
+border-top-left-radius: 0.75rem;
+border-top-right-radius: 0.75rem;
+border-bottom-right-radius: 0.75rem;
+border-bottom-left-radius: 0.75rem;
+padding: 10px;
+height: 90vh;
+}
+#Tertiary {
+padding: 10px;
+height: 10vh;
+overflow-x: hidden;
+}
+
+#PrimaryCard {
+border-top-left-radius: 0.75rem;
+border-top-right-radius: 0.75rem;
+border-bottom-right-radius: 0.75rem;
+border-bottom-left-radius: 0.75rem;
+height: 50vh;
+}
+.list-info {
+background-color: #2f363c;
+color : #ddd;
+font-size: 12px;
+font-family: monospace;
+font-weight: 100;
+letter-spacing: 2px;
+padding : 5px;
+margin-top : 1em;
+border-radius: 0.3125em;
+}
+.list-group-item {
+padding-top: 7px;
+padding: 10px;
+margin: 0px;
+padding-bottom: 0px;
+}
+li .ui-btn {
+padding: 0.1em 1em;
+}
+.todolist {
+height: 20vh;
+}
+.fa {
+float:right;
+}
+.image_outer_container{
+margin-top: auto;
+margin-bottom: auto;
+border-radius: 50%;
+position: relative;
+}
+
+.image_inner_container{
+border-radius: 50%;
+padding: 5px;
+background: #833ab4;
+background: -webkit-linear-gradient(to bottom, #fcb045, #fd1d1d, #833ab4);
+background: linear-gradient(to bottom, #fcb045, #fd1d1d, #833ab4);
+}
+.image_inner_container img{
+height: 8vh;
+width: 8vh;
+border-radius: 50%;
+border: 5px solid white;
+}
+
+.image_outer_container .green_icon{
+background-color: #4cd137;
+position: absolute;
+right: 0vh;
+bottom: 1vh;
+height: 2vh;
+width: 2vh;
+border:5px solid white;
+border-radius: 50%;
+}
+.bio-content {
+font-family: monospace;
+font-weight: 100;
+letter-spacing: 2px;
+font-size: 0.3125em;
+font-size: 8px;
+line-height: 0.5;
+}
+small {
+background-color: #2f363c;
+color : #ddd;
+font-size: 11px;
+font-family: monospace;
+font-weight: 100;
+letter-spacing: 2px;
+padding : 3px;
+margin-top : -0.75em;
+margin-left: 1em;
+border-radius: 0.3125em;
+}
+.completed
+{
+color: gray;
+text-decoration: line-through;
+}
+
+.btn-circle {
+border-radius: 45px;
+}
+.btn-circle.btn-lg {
+border-radius: 25px;
+}
+    </style>
+    <div class="container-fluid" style="padding: 0px;">
+        <div class="container-fluid" id="Secondary">
+            <img class="text-center" src="navifly.png" width="100vh" />
+            <div class="row slick-carousel" id="card-carousel">
+                <div class="card" id="PrimaryCard">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Task Manager</h5>
+                    <h6 class="card-subtitle mb-2 text-muted text-center">Aman Shaikh // Cheif Technical Officer</h6>
+                    <br>
+                    <!--
+                    <ul data-role="listview" data-editable="true" data-editable-type="complex" data-editable-form="editing-form" data-title="On-Going" data-empty-title="No Tasks" data-collapsed="false" style="height: 200px;">
+                        <li>
+                            <a>
+                                <h3><span id="fruitName">Apple</span></h3>
+                                <p class="list-info">Dead-line 2 Janurary 2019</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a>
+                                <h3><span id="fruitName">Pineapple</span></h3>
+                                <p><em>Shape:</em> <strong><span id="fruitShape">oval</span></strong></p>
+                            </a>
+                        </li>
+                        <li>
+                            <a>
+                                <h3><span id="fruitName">Orange</span></h3>
+                                <p><em>Shape:</em> <strong><span id="fruitShape">round</span></strong></p>
+                            </a>
+                        </li>
+                        <li>
+                            <a>
+                                <h3><span id="fruitName">Orange</span></h3>
+                                <p><em>Shape:</em> <strong><span id="fruitShape">round</span></strong></p>
+                            </a>
+                        </li>
+                        <li>
+                            <a>
+                                <h3><span id="fruitName">Orange</span></h3>
+                                <p><em>Shape:</em> <strong><span id="fruitShape">round</span></strong></p>
+                            </a>
+                        </li>
+                    </ul>
+                    <form id="editing-form" data-editable-form="true">
+                        <input type="text" data-item-name="fruitName" data-item-template="<h3><span id='fruitName'>%%</span></h3>">
+                        <input type="text" data-item-name="fruitShape" data-item-template="<p><em>Shape:</em> <strong><span id='fruitShape'>%%</span></strong></p>">
+                        <button class="ui-btn ui-corner-all" data-add-button="true">Add</button>
+                    </form>
+                    
+                    -->
+                    <!--
+                    <div class="accordion" id="accordionExample">
+                        <div class="card">
+                            <div class="card-header" id="headingOne">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        Tasks Remaining
+                                    </button>
+                                </h5>
+                            </div>
+
+                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                <div class="card-body">
+                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header" id="headingTwo">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        Collapsible Group Item #2
+                                    </button>
+                                </h5>
+                            </div>
+                            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                                <div class="card-body">
+                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header" id="headingThree">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                        Collapsible Group Item #3
+                                    </button>
+                                </h5>
+                            </div>
+                            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                                <div class="card-body">
+                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    -->
+                    <div class="panel panel-default b-l-success no-bg b-gray-dark">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">CURRENT AGENDA<i class="fa fa-plus"></i></h3>
+                        </div>
+                        <div class="panel-body">
+                            <!--
+                            <input id="todolistinp" type="text" name="text" class="form-control" placeholder="Add Do List">
+                            -->
+                            <div class="input-group mb-3">
+                                <input id="todolistinp" type="text" name="text" class="form-control" placeholder="Add Do List" data-user="AmanShaikh">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary" type="button"><i class="fa fa-code" style="float:left;"></i></button>
+                                    <input type="text" class="form-control" id="date-picker" data-provide="datepicker">
+                                    <script>
+                                        $('#date-picker').datepicker({
+                                            autoclose: true,
+                                            todayHighlight: true,
+                                            toggleActive: true,
+                                        });
+
+                                    </script>
+                                </div>
+                            </div>
+
+                            <ol class="todolist list-group mCustomScrollbar" data-mcs-theme="dark">
+
+                                <li class="todo list-group-item"><span><i class="fa fa-trash"></i></span> TEMPLATE<small class="label label-danger"><i class="fa fa-clock-o" style="float:none;"></i>&nbsp; 26 days</small><br>
+                                    <h6 class="list-info"><span><i class="fa fa-calendar" style="float:left;"></i></span>&nbsp;3 days</h6>
+                                </li>
+                            </ol>
+                        </div>
+                        <script>
+                            var config = {
+                                apiKey: "AIzaSyCuA2qR6PRrlVev8UkYeSuh19PhOrwHcXs",
+                                authDomain: "hivemind-mxiv.firebaseapp.com",
+                                databaseURL: "https://hivemind-mxiv.firebaseio.com",
+                                projectId: "hivemind-mxiv",
+                                storageBucket: "hivemind-mxiv.appspot.com",
+                                messagingSenderId: "468470961309"
+                            };
+
+                            firebase.initializeApp(config);
+                            //console.log(firebase); 
+                            var database = firebase.database();
+
+
+                            database.ref('ATLAS-Todo').once('value', function(snapshot) {
+                                if (snapshot.exists()) {
+                                    snapshot.forEach(function(data) {
+                                        var val = data.val();
+                                        //console.log(val);
+                                        //$('.todolist').append(val.context);
+                                        var tempstr = val.context;
+                                        var date1 = new Date(val.deadline);
+                                        var date2 = new Date();
+                                        var dd = date2.getDate();
+                                        var mm = date2.getMonth() + 1; //January is 0!
+                                        var yyyy = date2.getFullYear();
+
+                                        if (dd < 10) {
+                                            dd = '0' + dd
+                                        }
+
+                                        if (mm < 10) {
+                                            mm = '0' + mm
+                                        }
+
+                                        date2 = new Date(mm + '/' + dd + '/' + yyyy);
+                                        var timeDiff = Math.abs(date2.getTime() - date1.getTime());
+                                        var sign = 'left';
+                                        if (date2.getTime() - date1.getTime() > 0) {
+                                            sign = 'overdue';
+                                        }
+                                        var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+                                        var tyu = '<small class="label label-danger"><i class="fa fa-clock-o" style="float:none;"></i>&nbsp; ' + diffDays + '  days ' + sign + '</small>';
+                                        
+                                        tempstr = tempstr.replace('7mxiv7',tyu);
+                                        //console.log(tempstr.indexOf('7mxiv7'));
+                                        
+                                        //$('#mCSB_1_container').append(val.context);
+                                        console.log(tempstr);
+                                        $('#mCSB_1_container').append(tempstr);
+
+                                    });
+                                }
+                            });
+
+                            $('.todolist').on('click', '.todo', function() {
+                                $(this).toggleClass('completed');
+                            });
+
+                            $('.todolist').on('click', 'span', function(event) {
+                                $(this).parent().fadeOut(1000, function() {
+                                    $(this).remove();
+                                    var tempstr = (this).innerHTML;
+                                    //console.log(this);
+                                    console.log(tempstr);
+                                    //console.log(tempstr.indexOf('</span>'));
+                                    console.log(tempstr.substring(tempstr.indexOf('</span>') + 8, tempstr.indexOf('<h6')));
+
+                                    //REMOVE FROM ONGOING
+                                    var qry = database.ref('ATLAS-Todo').orderByChild('keyword').equalTo(tempstr.substring(tempstr.indexOf('</span>') + 8, tempstr.indexOf('<h6')));
+                                    qry.once('child_added', function(snapshot) {
+                                        snapshot.ref.remove();
+                                    });
+
+                                });
+                                event.stopPropagation();
+                            });
+
+                            $('#todolistinp').on('keypress', function(event) {
+                                if (event.which == 13) {
+                                    var input = $(this).val();
+                                    console.log();
+                                    //console.log(document.getElementById("date-picker").value);
+                                    var date1 = new Date(document.getElementById("date-picker").value);
+                                    var date2 = new Date();
+                                    var dd = date2.getDate();
+                                    var mm = date2.getMonth() + 1; //January is 0!
+                                    var yyyy = date2.getFullYear();
+
+                                    if (dd < 10) {
+                                        dd = '0' + dd
+                                    }
+
+                                    if (mm < 10) {
+                                        mm = '0' + mm
+                                    }
+
+                                    date2 = new Date(mm + '/' + dd + '/' + yyyy);
+                                    var timeDiff = Math.abs(date2.getTime() - date1.getTime());
+                                    var sign = 'left';
+                                    if (date2.getTime() - date1.getTime() > 0) {
+                                        sign = 'overdue';
+                                    }
+                                    var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+                                    var tyu = '<small class="label label-danger"><i class="fa fa-clock-o" style="float:none;"></i>&nbsp; ' + diffDays + '  days ' + sign + '</small>';
+                                    console.log(date1);
+                                    console.log(date2);
+                                    console.log(diffDays);
+                                    //.todolist 
+                                    $('#mCSB_1_container').prepend('<li class="todo list-group-item"><span><i class="fa fa-trash"></i></span> ' + input + '' + tyu + '<h6 class="list-info"><span><i class="fa fa-clock" style="float:left;"></i></span>&nbsp;' + displayTime() + '</h6></li>');
+
+                                    var todo_item = {};
+                                    todo_item.context = '<li class="todo list-group-item"><span><i class="fa fa-trash"></i></span> ' + input + ' 7mxiv7'+'<h6 class="list-info"><span><i class="fa fa-clock" style="float:left;"></i></span>&nbsp;' + displayTime() + '</h6></li>';
+                                    todo_item.timestamp = displayTime();
+                                    todo_item.keyword = input;
+                                    todo_item.deadline = document.getElementById("date-picker").value;
+                                    todo_item.member = "AmanShaikh";
+                                    var ref = database.ref('ATLAS-Todo');
+                                    ref.push(todo_item);
+
+                                    console.log(input);
+                                    $(this).val('');
+                                }
+                            });
+
+                            $('.fa-plus').click(function() {
+                                $('#todolistinp').fadeToggle(1000);
+                            });
+
+                            function displayTime() {
+                                var str = "\t";
+                                var currentdate = new Date();
+                                var locale = "en-us";
+                                var month = currentdate.toLocaleString(locale, {
+                                    month: "long"
+                                });
+                                var day = currentdate.getDate();
+                                var year = currentdate.getFullYear();
+                                var time = currentdate.toLocaleTimeString();
+
+                                return str += time + " " + day + " " + month + " " + year;
+                            }
+
+                        </script>
+                    </div>
+
+                </div>
+            </div>
+                <div class="card" id="PrimaryCard">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Task Manager</h5>
+                    <h6 class="card-subtitle mb-2 text-muted text-center">Aman Shaikh // Cheif Technical Officer</h6>
+                    <br>
+                    <div class="panel panel-default b-l-success no-bg b-gray-dark">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">CURRENT AGENDA<i class="fa fa-plus"></i></h3>
+                        </div>
+                        <div class="panel-body">
+                            <!--
+                            <input id="todolistinp" type="text" name="text" class="form-control" placeholder="Add Do List">
+                            -->
+                            <div class="input-group mb-3">
+                                <input id="todolistinp" type="text" name="text" class="form-control" placeholder="Add Do List" data-user="AmanShaikh">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary" type="button"><i class="fa fa-code" style="float:left;"></i></button>
+                                    <input type="text" class="form-control" id="date-picker" data-provide="datepicker">
+                                    <script>
+                                        $('#date-picker').datepicker({
+                                            autoclose: true,
+                                            todayHighlight: true,
+                                            toggleActive: true,
+                                        });
+
+                                    </script>
+                                </div>
+                            </div>
+
+                            <ol class="todolist list-group mCustomScrollbar" data-mcs-theme="dark">
+
+                                <li class="todo list-group-item"><span><i class="fa fa-trash"></i></span> TEMPLATE<small class="label label-danger"><i class="fa fa-clock-o" style="float:none;"></i>&nbsp; 26 days</small><br>
+                                    <h6 class="list-info"><span><i class="fa fa-calendar" style="float:left;"></i></span>&nbsp;3 days</h6>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            </div>
+            <div class="card" id="PrimaryCard">
+                <div class="card-body">
+                    <h5 class="card-title text-center">INVENTORY</h5>
+                    <br>
+                    <div class="panel panel-default b-l-success no-bg b-gray-dark">
+                        <div class="panel-body">
+                            <ol class="todolist list-group mCustomScrollbar" data-mcs-theme="dark">
+                                <table class="table table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">ITEM</th>
+                                            <th scope="col">QTY</th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td>Mark</td>
+                                            <td>2</td>
+                                            <td><button type="button" class="btn btn-success btn-circle btn-lg"><i class="fa fa-plus"></i></button>
+                                                <button type="button" class="btn btn-danger btn-circle btn-lg"><i class="fa fa-minus"></i></button></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">2</th>
+                                            <td>Jacob</td>
+                                            <td>Thornton</td>
+                                            <td>@fat</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">3</th>
+                                            <td colspan="2">Larry the Bird</td>
+                                            <td>@twitter</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </ol>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="container-fluid row" id="Tertiary">
+
+            <div class="d-flex justify-content-center h-100 col-xs-6" style="width: 15vh">
+                <div class="image_outer_container">
+                    <div class="green_icon"></div>
+                    <div class="image_inner_container">
+                        <img src="https://image.ibb.co/f5Kehq/bio-image.jpg">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6 bio-content">
+                <h6>Aman Shaikh</h6>
+                <h6>Cheif Technical Officer</h6>
+                <h6>amanshaikh.arc@gmail.com</h6>
+                <h6>Last active : 1st December 2019.</h6>
+                <h6>Mobile : +971 56 3959069</h6>
+            </div>
+        </div>
+
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <!-- ScrollBAr Javascript -->
+    <script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
+        <!-- SLICK -->
+    
+    <link rel='stylesheet' href='http://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css'>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.css'>
+    <script src='http://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js'></script>
+    <script>
+        $('.slick-carousel').slick({
+        infinite: true,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        centerPadding: '5%',
+        centerMode: true,
+        prevArrow: $('.top-arrow'),
+        nextArrow: $('.bottom-arrow')
+    });
+    </script>
+</body>
+
+</html>
